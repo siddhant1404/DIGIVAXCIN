@@ -196,23 +196,30 @@ def view_app(name, age, comm_ind):
         
         
         
-        st.write(info)
         if info["Name"] == name:
             st.success("Verified")
+            list_keys = info.keys()
+            list_vals = info.values()
             
-        list_keys = info.keys()
-        list_vals = info.values()
-        
-        df_cert = pd.DataFrame(columns = list_keys)
-        
-        df_cert.loc[len(df_cert)] = list_vals 
-        st.write(df_cert)
+            df_cert = pd.DataFrame(columns = list_keys)
             
+            df_cert = pd.read_excel("cert.xlsx")
+            names = df_cert["Name"]
         
-        if st.sidebar.checkbox("Vaccine Safety"):
-            st.write("yo")
+            index = list(np.where(df_cert['Name'] == info["Name"])[0])
+                
+            if info["Name"] in names:
+                df_cert.loc[len(df_cert)] = list_vals
+                df_cert.to_excel("cert.xlsx", index=False)
+            st.sidebar.write("Vaccine Name: ", info["Vaccine"])
+            st.sidebar.write("Vaccination Name: ", info["Date"])
+            vac_date = df_cert.loc[index]['Date'].tolist()[0]
+            st.write(vac_date)
+            
+            
+        else:
+            st.error("Names do not match")
         
-        df_cert.to_excel("cert.xlsx", index=False)
         
         
         
