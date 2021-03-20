@@ -51,17 +51,6 @@ def app():
             view.view_app(name, df.iloc[comm_ind]['age'], comm_ind)
         if flagvacc == 1:
             vaccine.view_app(name, df.iloc[comm_ind]['age'], comm_ind)
-        
-        
-    
-    if(st.button("Progress Bar")):
-        st.write("Hello")
-        my_bar = st.progress(0)
-        for percent_complete in range(1, 6):
-            time.sleep(60)
-            my_bar.progress(percent_complete * 20)
-        st.success("Vaccine Dose 2 due")
-        st.balloons()
     
     
     
