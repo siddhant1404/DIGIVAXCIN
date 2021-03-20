@@ -290,17 +290,70 @@ def view_app(name, age, comm_ind):
             if (isValid(x)) and x == cert_pan:
                 st.success(("PAN Number Verified: ", cert_pan))
     
+    issues = st.subheader("Enter your health conditions: ")
+    col11, col22 = st.beta_columns(2)
+    with col11:
+        issue1 = st.checkbox("Heart failure with hospital admission in past one year")
+        issue2 = st.checkbox("Post Cardiac Transplant/Left Ventricular Assist Device (LVAD)")
+        issue3 = st.checkbox("Significant left ventricular systolic dysfunction (LVEF<40%)")
+        issue4 = st.checkbox("Moderate or severe valvular heart disease")
+        issue5 = st.checkbox("Congenital heart disease with severe PAH or Idiopathic PAH")
+    with col22:
+        issue6 = st.checkbox("Coronary Artery Disease with past CABG/PTCA/MI AND Hypertension/Diabetes on treatment")
+        issue7 = st.checkbox("Angina AND Hypertension/Diabetes on treatment")
+        issue8 = st.checkbox("CT/MRI documented stroke AND Hypertension/Diabetes on treatment")
+        issue9 = st.checkbox("Pulmonary artery hypertension AND Hypertension/Diabetes on treatment")
+        issue10 = st.checkbox("Diabetes (>10 years OR with complications) AND Hypertension on treatment")
     
+    iss_list = []
+    issues = []
+    df_issues = pd.read_excel("hissues.xlsx")
+    if issue1 == True:
+        iss_list.append("Heart failure with hospital admission in past one year")
+    if issue2 == True:
+        iss_list.append("Post Cardiac Transplant/Left Ventricular Assist Device (LVAD)")
+    if issue3 == True:
+        iss_list.append("Significant left ventricular systolic dysfunction (LVEF<40%)")
+    if issue4 == True:
+        iss_list.append("Moderate or severe valvular heart disease")
+    if issue5 == True:
+        iss_list.append("Congenital heart disease with severe PAH or Idiopathic PAH")
+    if issue6 == True:
+        iss_list.append("Coronary Artery Disease with past CABG/PTCA/MI AND Hypertension/Diabetes on treatment")
+    if issue7 == True:
+        iss_list.append("Angina AND Hypertension/Diabetes on treatment")
+    if issue8 == True:
+        iss_list.append("CT/MRI documented stroke AND Hypertension/Diabetes on treatment")
+    if issue9 == True:
+        iss_list.append("Pulmonary artery hypertension AND Hypertension/Diabetes on treatment")
+    if issue10 == True:
+        iss_list.append("Diabetes (>10 years OR with complications) AND Hypertension on treatment")
+    st.subheader("Your selected health issues: ")
+    for i in iss_list:
+        st.write(i)
+        
+        
+    
+    option = "Issues"
+    
+    index = list(np.where(df['name'] == name)[0])
+    df_issues.loc[index[0]-1, option] =  str(iss_list)
+    st.write(df_issues)
+    df_issues.to_excel("hissue.xlsx", index=False)
+            
     covaxin = ['']
     covishield = ['']
     #2nd Dose vaccination progress bar
-    if(st.button("Progress Bar")):
+    if(st.sidebar.button("Progress Bar")):
         st.write("Hello")
         my_bar = st.progress(0)
         for percent_complete in range(1, 6):
             time.sleep(1)
             my_bar.progress(percent_complete * 20)
-        st.success("Vaccine Dose 2 due")
-        st.balloons()
+        if my_bar.progress == 100:
+            st.success("Vaccine Dose 2 due")
+            st.balloons()
+    if st.sidebar.button("Reset"):
+        my_bar = st.progress(0)
     
         
