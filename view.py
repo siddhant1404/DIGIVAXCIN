@@ -27,7 +27,7 @@ def view_app(name, age, comm_ind):
     
     st.header("Select today's symptoms and click submit: ")
     index = list(np.where(df['name'] == name)[0])
-    placeholder_df.write(df.iloc[comm_ind])
+    placeholder_df.dataframe(df.iloc[comm_ind])
     days = ["Select a day","Day 1", "Day 2", "Day 3", "Day 4", "Day 5", "Day 6", "Day 7", "Day 8", "Day 9", "Day 10", "Day 11", "Day 12", 
     "Day 13", "Day 14"]
     option = st.sidebar.selectbox('Which day of your quarantine do you want to access',
@@ -87,3 +87,82 @@ def view_app(name, age, comm_ind):
             
             if st.button("Submit"):
                 df.to_excel('patient.xlsx', index=False)
+
+            if st.button("Calculate Day-Wise Scores"):
+                WEIGHTS=[]
+                for x in range(3,17):
+                    for y in range(1, len(df)):
+                        l=[]
+                        n=0
+                        count=1
+                        weight={}
+                        for z in range (len(df.iloc[y,x])):
+                                if(df.iloc[y,x][z]=="'" and count%2!=0):
+                                    count=count+1
+                                    n=z
+                                elif(df.iloc[y,x][z]=="'" and count%2==0):
+                                    l.append(''.join(df.iloc[y,x][n:z]))
+                                    count=count+1
+
+                        for z in l:
+                            weight[z]=(weight.get(z,0)+1)/len(df)
+                    WEIGHTS.append(weight)
+
+                user = []
+                y = index[0]
+                for x in range(3, 17):
+                    l = []
+                    n = 0
+                    count = 1
+                    for z in range(len(df.iloc[y, x])):
+                        if(df.iloc[y,x][z]=="'" and count%2!=0):
+                            count=count+1
+                            n=z
+                        elif(df.iloc[y,x][z]=="'" and count%2==0):
+                            l.append(''.join(df.iloc[y,x][n:z]))
+                            count=count+1
+                    user.append(l)
+
+                SCORE=[]
+                for x in range(14):
+                    score=0
+                    for y in user[x]:
+                        for key,value in WEIGHTS[x].items():
+                            if (y==key):
+                                score=score+value
+                    SCORE.append(score)
+                df_score = pd.read_excel("score.xlsx")
+                print(df_score)
+
+                for i in range(3,17):
+                    df_score.at[index, df_score.columns[i]] = SCORE[i-3]
+                df_score.to_excel("score.xlsx", index=False)
+            
+                df_score = pd.read_excel("score.xlsx")
+                print(df_score)
+                ave = df_score.mean(axis = 0)[1:14]
+                print(ave)
+                deviation = df_score.std(axis = 0)[1:14]
+                print(deviation)
+
+                high = ave + deviation
+                days = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", 
+                    "13"]
+                scores = df_score.iloc[index[0], 3:16]
+                for i in scores:
+                    print(i)
+                import matplotlib.pyplot as plt
+                plt.bar(days, ave, color = ['green'])
+                plt.bar(days, high, color = ['red'], alpha = 0.3)
+
+                plt.xlabel("Days")
+                plt.ylabel("Risk Factor")
+                plt.plot(days, scores, color = 'red')
+                plt.legend(['Patient Risk Factor','Medium risk factor', 'High risk factor'])
+                st.table(df_score.iloc[index, :8])
+                st.table(df_score.iloc[index, 8:])
+                st.pyplot(plt)
+                st.write("Medium risk factor: Average risk factor of all Patients")
+                st.write("High risk factor: Average + Standard Deviation")
+    
+    placeholder_df.write(df.iloc[comm_ind])
