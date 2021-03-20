@@ -76,8 +76,6 @@ To provide a platform for one’s COVID risk assessment by improving preliminary
 
 ![12th](https://user-images.githubusercontent.com/80914496/111882686-e142e480-89dc-11eb-978c-75eea0570ab7.PNG)
 
-![9th](https://user-images.githubusercontent.com/80914496/111882689-e3a53e80-89dc-11eb-9b81-18c3c05a7f81.PNG)
-
 ![12th](https://user-images.githubusercontent.com/80914496/111882709-033c6700-89dd-11eb-8d02-8e5750da4552.PNG)
 
 
