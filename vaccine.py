@@ -1,5 +1,5 @@
 #Vaccine App
-def view_app(name, age, comm_ind):
+def view_app(name, res, comm_ind):
     import cv2
     import pytesseract
     import re
@@ -12,12 +12,15 @@ def view_app(name, age, comm_ind):
     placeholder_map = st.empty()
     placeholder_df = st.empty()
     
-    
+    age = int(round(st.number_input('Enter your age: ')))
     st.sidebar.write("Your name: ", name)
     st.sidebar.write("Your age: ", age)
     df = pd.read_excel('vacsymp.xlsx')
     st.header("Select today's symptoms and click submit: ")
     index = list(np.where(df['name'] == name)[0])
+    df.at[index, 'age'] = age
+    
+    
     placeholder_df.dataframe(df.iloc[comm_ind])
     days = ["Select a day","Day 1", "Day 2", "Day 3", "Day 4", "Day 5"]
     
@@ -153,7 +156,7 @@ def view_app(name, age, comm_ind):
                 st.write("Medium risk factor: Average risk factor of all Patients")
                 st.write("High risk factor: Average + Standard Deviation")
     
-    placeholder_df.write(df.iloc[comm_ind])
+    placeholder_df.write(df.iloc[comm_ind, 3:])
     
     #Certificate Image Processing
     vac_img = st.file_uploader("Please upload a screenshot of your vaccine certificate")
@@ -193,7 +196,7 @@ def view_app(name, age, comm_ind):
                 info["verification"]=text[x-2] + " "+ text[x-1]+ " " + text[x+1]
             elif(text[x]=="Residing"):
                 info["City"]=text[x+4]
-        
+        st.write(info)
         
         
         if info["Name"] == name:
@@ -338,7 +341,6 @@ def view_app(name, age, comm_ind):
     
     index = list(np.where(df['name'] == name)[0])
     df_issues.loc[index[0]-1, option] =  str(iss_list)
-    st.write(df_issues)
     df_issues.to_excel("hissue.xlsx", index=False)
             
     covaxin = ['']
@@ -350,9 +352,8 @@ def view_app(name, age, comm_ind):
         for percent_complete in range(1, 6):
             time.sleep(1)
             my_bar.progress(percent_complete * 20)
-        if my_bar.progress == 100:
-            st.success("Vaccine Dose 2 due")
-            st.balloons()
+        st.success("Vaccine Dose 2 due")
+        st.balloons()
     if st.sidebar.button("Reset"):
         my_bar = st.progress(0)
     
