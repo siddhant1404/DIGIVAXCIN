@@ -7,11 +7,15 @@
 
 ### <br/> ADD-ONs/SUGGESTIONS BY JUDGES:
 - **Add feature to collect health issues of candidate, so that it will be useful for vaccination**
-<img align="center" width="400" height="300" src="https://user-images.githubusercontent.com/80914496/111881952-ed2ca780-89d8-11eb-9159-1d0cb15b652e.PNG>
+<br/>
+<img align="center" width="400" height="300" src="https://user-images.githubusercontent.com/81008815/111882288-ddae5e00-89da-11eb-8c7b-2e2e3afd3c82.PNG">
 
-<br/>- **Online ID verification (Aadhar/Pan Card)**
-<img align="center" width="400" height="300" src="https://user-images.githubusercontent.com/80914496/111882196-5234cd00-89da-11eb-8cdd-afdc28c666a7.PNG>
-<img align="center" width="400" height="300" src="https://user-images.githubusercontent.com/80914496/111882200-55c85400-89da-11eb-89af-b0089119ac6e.PNG>
+
+- **Online ID verification (Aadhar/Pan Card)**
+<br/>
+<img align="center" width="800" height="400" src="https://user-images.githubusercontent.com/81008815/111882293-e737c600-89da-11eb-9682-c01f51888959.PNG">
+
+<img align="center" width="800" height="400" src="https://user-images.githubusercontent.com/81008815/111882311-fae32c80-89da-11eb-92f0-200fb84ac529.PNG">
 
 
 <br/> **1)	PROBLEM STATEMENT:** 
