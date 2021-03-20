@@ -2,6 +2,7 @@
 <p align="center">
 <img align="center" width="400" height="400" src="https://user-images.githubusercontent.com/80914496/111869175-0d8e3f00-89a4-11eb-9dd9-f07a7d66bf6b.JPG" style="width:50%;display: block; align: center; margin-left: auto;margin-right: auto;">
 </p>
+
 ### <p align="center"> _Digivaxin:_ Digital Vaccination Foot Print & COVID Risk Analyser & Tracker </p>
 
 <br/> **1)	PROBLEM STATEMENT:** 
