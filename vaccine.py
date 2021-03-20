@@ -8,9 +8,9 @@ def view_app(name, age, comm_ind):
     from PIL import Image
     import pandas as pd
     import numpy as np
+    import datetime 
     placeholder_map = st.empty()
     placeholder_df = st.empty()
-    
     
     
     st.sidebar.write("Your name: ", name)
@@ -197,24 +197,71 @@ def view_app(name, age, comm_ind):
         
         
         if info["Name"] == name:
-            st.success("Verified")
+            st.success("Name Verified")
             list_keys = info.keys()
             list_vals = info.values()
             
             df_cert = pd.DataFrame(columns = list_keys)
             
             df_cert = pd.read_excel("cert.xlsx")
-            names = df_cert["Name"]
+            names = list(df_cert["Name"])
         
             index = list(np.where(df_cert['Name'] == info["Name"])[0])
                 
-            if info["Name"] in names:
+            if info["Name"] not in names:
                 df_cert.loc[len(df_cert)] = list_vals
                 df_cert.to_excel("cert.xlsx", index=False)
             st.sidebar.write("Vaccine Name: ", info["Vaccine"])
             st.sidebar.write("Vaccination Name: ", info["Date"])
             vac_date = df_cert.loc[index]['Date'].tolist()[0]
-            st.write(vac_date)
+            
+            df_timer = pd.read_excel("Timer.xlsx")
+            
+        
+            if info["Name"] not in list(df_timer["Name"]):
+                df_timer.loc[len(df_cert)] = [name, vac_date]
+                df_timer.to_excel("Timer.xlsx", index=False)
+                
+            date_list = vac_date.split(" ")
+            datenum = date_list[0]
+            year = date_list[2]
+            if date_list[1]=="Jan":
+                month = 1
+            elif date_list[1]=="Feb":
+                month = 2
+            elif date_list[1]=="Mar":
+                month = 3
+            elif date_list[1]=="Apr":
+                month = 4
+            elif date_list[1]=="May":
+                month = 5
+            elif date_list[1]=="Jun":
+                month = 6
+            elif date_list[1]=="Jul":
+                month = 7
+            elif date_list[1]=="Aug":
+                month = 8
+            elif date_list[1]=="Sept":
+                month = 9
+            elif date_list[1]=="Oct":
+                month = 10
+            elif date_list[1]=="Nov":
+                month = 11
+            elif date_list[1]=="Dec":
+                month = 12
+            date_string = ''
+            date_string += datenum
+            date_string += "/"
+            date_string += str(month)
+            date_string += "/"
+            date_string += year
+            
+            
+            element = datetime.datetime.strptime(date_string,"%d/%m/%Y")
+            tuple = element.timetuple() 
+        
+            timestamp_dose1 = time.mktime(tuple) 
+            timestamp_current = time.time()
             
             
         else:
@@ -223,15 +270,35 @@ def view_app(name, age, comm_ind):
         
         
         
-        
-        
-        
+    pan_img = st.file_uploader("Please upload a screenshot of your PAN Card")
+    if pan_img is not None:
+        pytesseract.pytesseract.tesseract_cmd = 'C:\\Program Files\\Tesseract-OCR\\tesseract.exe'
+        img_pan = Image.open(pan_img)
+        st.image(img_pan, caption='Your PAN Card')
+        np_imgpan = np.array(img_pan)
+        np_imgpan = cv2.cvtColor(np_imgpan, cv2.COLOR_BGR2GRAY)
+        ret,thresh1 = cv2.threshold(np_imgpan,120,255,cv2.THRESH_BINARY)
+        # cv2.imshow("Thresh1",thresh1)
+        # cv2.waitKey(100000)
+        custom_config = r'--oem 3 --psm 4'
+        text=pytesseract.image_to_string(np_imgpan, config=custom_config,lang='eng').split()
+        def isValid(Z):
+            Result=re.compile("[A-Za-z]{5}\d{4}[A-Za-z]{1}")
+            return Result.match(Z)
+        cert_pan = info["verification"].split(" ")[-1]
+        for x in text:
+            if (isValid(x)) and x == cert_pan:
+                st.success(("PAN Number Verified: ", cert_pan))
+    
+    
+    covaxin = ['']
+    covishield = ['']
     #2nd Dose vaccination progress bar
     if(st.button("Progress Bar")):
         st.write("Hello")
         my_bar = st.progress(0)
         for percent_complete in range(1, 6):
-            time.sleep(60)
+            time.sleep(1)
             my_bar.progress(percent_complete * 20)
         st.success("Vaccine Dose 2 due")
         st.balloons()
