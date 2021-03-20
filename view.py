@@ -239,8 +239,8 @@ def view_app(name, age, comm_ind):
         plt.figure(figsize =(9, 9)) 
         plt.scatter(df_latlong['P1'], df_latlong['P2'], c = cvec) 
         plt.legend((r, g, b, c, y, m, k), 
-                ('Label 0', 'Label 1', 'Label 2', 'Label 3' ,'Label 4', 
-                    'Label 5', 'Label -1'), 
+                ('Group 0', 'Group 1', 'Group 2', 'Group 3' ,'Group 4', 
+                    'Group 5', 'Group -1'), 
                 scatterpoints = 1, 
                 loc ='upper left', 
                 ncol = 3, 
