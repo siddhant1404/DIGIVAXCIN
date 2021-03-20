@@ -166,3 +166,160 @@ def view_app(name, age, comm_ind):
                 st.write("High risk factor: Average + Standard Deviation")
     
     placeholder_df.write(df.iloc[comm_ind])
+
+    st.sidebar.subheader("Location and Tracing")
+    location = st.sidebar.text_area("Enter your location")
+    if st.sidebar.button("Check on map"):
+        '''geolocator = Nominatim(user_agent="my-app")
+        location = geolocator.geocode(location)
+        print(location.address)
+        print((location.latitude, location.longitude))'''
+        df_map = pd.read_excel("location.xlsx")
+        loc_list = []
+        for i in range(2):
+            for j in range(1, len(df_map)):
+                loc_list.append(df_map.iloc[j, i])
+        loc_list.append(location)
+        geolocator = Nominatim(user_agent='tracker')
+        df_latlong = pd.DataFrame(columns=['lat', 'lon'])
+        for location in loc_list:
+            geo_loc = geolocator.geocode(location)
+            if geo_loc is not None:
+                df2 = pd.DataFrame([[geo_loc.latitude, geo_loc.longitude]], columns=['lat', 'lon'])
+                df_latlong = df_latlong.append(df2)
+
+        placeholder_map.map(df_latlong)
+        import numpy as np
+        import pandas as pd
+        from sklearn.cluster import KMeans
+        from sklearn.cluster import DBSCAN
+        from sklearn.decomposition import PCA
+        from sklearn.metrics import silhouette_score
+        import seaborn as sns
+        import matplotlib.pyplot as plt
+        from mpl_toolkits.mplot3d import Axes3D
+        from sklearn.cluster import DBSCAN 
+        from sklearn.preprocessing import StandardScaler 
+        from sklearn.preprocessing import normalize
+        from sklearn.cluster import KMeans
+        from sklearn.cluster import DBSCAN
+        import matplotlib.pyplot as plt 
+
+        df_latlong.rename(columns={'lat':'P1','lon':'P2'},inplace=True)
+        db_default = DBSCAN(eps = 0.05, min_samples = 3).fit(df_latlong) 
+        labels = db_default.labels_ 
+        labels
+        colours1 = {} 
+        colours1[0] = 'r'
+        colours1[1] = 'g'
+        colours1[2] = 'b'
+        colours1[3] = 'c'
+        colours1[4] = 'y'
+        colours1[5] = 'm'
+        colours1[-1] = 'k'
+        
+        cvec = [colours1[label] for label in labels] 
+        colors = ['r', 'g', 'b', 'c', 'y', 'm', 'k' ] 
+        
+        r = plt.scatter( 
+                df_latlong['P1'], df_latlong['P2'], marker ='o', color = colors[0]) 
+        g = plt.scatter( 
+                df_latlong['P1'], df_latlong['P2'], marker ='o', color = colors[1]) 
+        b = plt.scatter( 
+                df_latlong['P1'], df_latlong['P2'], marker ='o', color = colors[2]) 
+        c = plt.scatter( 
+                df_latlong['P1'], df_latlong['P2'], marker ='o', color = colors[3]) 
+        y = plt.scatter( 
+                df_latlong['P1'], df_latlong['P2'], marker ='o', color = colors[4]) 
+        m = plt.scatter( 
+                df_latlong['P1'], df_latlong['P2'], marker ='o', color = colors[5]) 
+        k = plt.scatter( 
+                df_latlong['P1'], df_latlong['P2'], marker ='o', color = colors[6]) 
+        
+        plt.figure(figsize =(9, 9)) 
+        plt.scatter(df_latlong['P1'], df_latlong['P2'], c = cvec) 
+        plt.legend((r, g, b, c, y, m, k), 
+                ('Label 0', 'Label 1', 'Label 2', 'Label 3' ,'Label 4', 
+                    'Label 5', 'Label -1'), 
+                scatterpoints = 1, 
+                loc ='upper left', 
+                ncol = 3, 
+                fontsize = 8) 
+        st.pyplot(plt)
+
+
+    if st.sidebar.button("Current hotspots"):
+        df_map = pd.read_excel("location.xlsx")
+        print(df_map)
+        loc_list = []
+        for i in range(2):
+            for j in range(1, len(df_map)):
+                loc_list.append(df_map.iloc[j, i])
+        print(loc_list)
+        geolocator = Nominatim(user_agent='patient')
+        df_latlong = pd.DataFrame(columns=['lat', 'lon'])
+        for location in loc_list:
+            geo_loc = geolocator.geocode(location)
+            if geo_loc is not None:
+                df2 = pd.DataFrame([[geo_loc.latitude, geo_loc.longitude]], columns=['lat', 'lon'])
+                df_latlong = df_latlong.append(df2)
+            
+        print(df_latlong)
+        placeholder_map.map(df_latlong)
+        import numpy as np
+        import pandas as pd
+        from sklearn.cluster import KMeans
+        from sklearn.cluster import DBSCAN
+        from sklearn.decomposition import PCA
+        from sklearn.metrics import silhouette_score
+        import seaborn as sns
+        import matplotlib.pyplot as plt
+        from mpl_toolkits.mplot3d import Axes3D
+        from sklearn.cluster import DBSCAN 
+        from sklearn.preprocessing import StandardScaler 
+        from sklearn.preprocessing import normalize
+        from sklearn.cluster import KMeans
+        from sklearn.cluster import DBSCAN
+        import matplotlib.pyplot as plt 
+
+        df_latlong.rename(columns={'lat':'P1','lon':'P2'},inplace=True)
+        db_default = DBSCAN(eps = 0.05, min_samples = 3).fit(df_latlong) 
+        labels = db_default.labels_ 
+        labels
+        colours1 = {} 
+        colours1[0] = 'r'
+        colours1[1] = 'g'
+        colours1[2] = 'b'
+        colours1[3] = 'c'
+        colours1[4] = 'y'
+        colours1[5] = 'm'
+        colours1[-1] = 'k'
+        
+        cvec = [colours1[label] for label in labels] 
+        colors = ['r', 'g', 'b', 'c', 'y', 'm', 'k' ] 
+        
+        r = plt.scatter( 
+                df_latlong['P1'], df_latlong['P2'], marker ='o', color = colors[0]) 
+        g = plt.scatter( 
+                df_latlong['P1'], df_latlong['P2'], marker ='o', color = colors[1]) 
+        b = plt.scatter( 
+                df_latlong['P1'], df_latlong['P2'], marker ='o', color = colors[2]) 
+        c = plt.scatter( 
+                df_latlong['P1'], df_latlong['P2'], marker ='o', color = colors[3]) 
+        y = plt.scatter( 
+                df_latlong['P1'], df_latlong['P2'], marker ='o', color = colors[4]) 
+        m = plt.scatter( 
+                df_latlong['P1'], df_latlong['P2'], marker ='o', color = colors[5]) 
+        k = plt.scatter( 
+                df_latlong['P1'], df_latlong['P2'], marker ='o', color = colors[6]) 
+        
+        plt.figure(figsize =(9, 9)) 
+        plt.scatter(df_latlong['P1'], df_latlong['P2'], c = cvec) 
+        plt.legend((r, g, b, c, y, m, k), 
+                ('Label 0', 'Label 1', 'Label 2', 'Label 3' ,'Label 4', 
+                    'Label 5', 'Label -1'), 
+                scatterpoints = 1, 
+                loc ='upper left', 
+                ncol = 3, 
+                fontsize = 8) 
+        st.pyplot(plt)
