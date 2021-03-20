@@ -11,6 +11,8 @@ def view_app(name, age, comm_ind):
     placeholder_map = st.empty()
     placeholder_df = st.empty()
     
+    
+    
     st.sidebar.write("Your name: ", name)
     st.sidebar.write("Your age: ", age)
     df = pd.read_excel('vacsymp.xlsx')
@@ -187,21 +189,30 @@ def view_app(name, age, comm_ind):
             elif(text[x]=="/" and text[x-1]=="Dose"):
                 info["Age"]=text[x+4]
                 info["Date"]=text[x+5]+ " " + text[x+6]+" "+ text[x+7]
-            elif(text[x]=="/" and text[x-1]=="by"):
-                info["by"]=text[x+7]+text[x+8]
-                info["Gender"]=text[x+6]
-            elif(text[x]=="/" and text[x-2]=="Vaccination" ):
-                info["verification"]=" ".join(text[x+4:x+8])
-            elif(text[x]=="ID"):
-                info["BenificiaryID"]=text[x+1]
+            elif(text[x]=='#'  ):
+                info["verification"]=text[x-2] + " "+ text[x-1]+ " " + text[x+1]
             elif(text[x]=="Residing"):
                 info["City"]=text[x+4]
+        
+        
+        
+        st.write(info)
+        if info["Name"] == name:
+            st.success("Verified")
+            
+        list_keys = info.keys()
+        list_vals = info.values()
+        
+        df_cert = pd.DataFrame(columns = list_keys)
+        
+        df_cert.loc[len(df_cert)] = list_vals 
+        st.write(df_cert)
             
         
+        if st.sidebar.checkbox("Vaccine Safety"):
+            st.write("yo")
         
-        st.write(text)
-        st.write(info)
-        
+        df_cert.to_excel("cert.xlsx", index=False)
         
         
         
@@ -217,5 +228,5 @@ def view_app(name, age, comm_ind):
             my_bar.progress(percent_complete * 20)
         st.success("Vaccine Dose 2 due")
         st.balloons()
-        
+    
         
