@@ -1,8 +1,8 @@
 # <p align="center"> DIGIVAXCIN </p>
 <p align="center">
-<img align="center" width="800" height="600" src="https://user-images.githubusercontent.com/80914496/111869175-0d8e3f00-89a4-11eb-9dd9-f07a7d66bf6b.JPG" style="width:50%;display: block; align: center; margin-left: auto;margin-right: auto;">
+<img align="center" width="200" height="200" src="https://user-images.githubusercontent.com/80914496/111869175-0d8e3f00-89a4-11eb-9dd9-f07a7d66bf6b.JPG" style="width:50%;display: block; align: center; margin-left: auto;margin-right: auto;">
 </p>
-### <p align="center"> _Digivaxin:_ Digital Vaccination Foot Print & COVID Risk Analyser & Tracker </p>
+<p align="center"> _Digivaxin:_ Digital Vaccination Foot Print & COVID Risk Analyser & Tracker </p>
 
 <br/> **1)	PROBLEM STATEMENT:** 
 - COVID-19 has been gripping the World since the end of 2019, resulting in the loss of many lives. Now, with the introduction of new vaccines, uncertainty has increased with respect to whether a person in our vicinity is vaccinated or not, whether they are infected, etc. Moreover, infected people lack a customized means to keep a track of their symptoms on a day to day basis, and information on whether their health is improving or not.
