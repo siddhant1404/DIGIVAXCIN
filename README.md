@@ -36,7 +36,6 @@ To provide a platform for one’s COVID risk assessment by improving preliminary
 <br/> **5) TECHNOLOGY STACK:**
 -	Streamlit web app -front end
 -	Machine learning using python, sklearn
-- Deployment- heroku
 
 <br/> **6) Analysis of differences between our solution and the currently available technology.**
 - The two apps that we found closest to our proposed solution are Aarogya Setu and CoWin, both launched by the Indian government. The comparison of our solution with those apps has been shown in the following slide.
