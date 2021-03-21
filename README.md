@@ -8,22 +8,22 @@
 ### <br/> ADD-ONs/SUGGESTIONS BY JUDGES (ROUND 2):  IMPLEMENTED
 Following up on the suggestions of our respected judges, we have incorporated the following aspects-
 
-- **Add feature to collect health issues of candidate, so that it will be useful for vaccination**
+- Add feature to collect health issues of candidate, so that it will be useful for vaccination
 <br/>
 <img align="center" width="400" height="300" src="https://user-images.githubusercontent.com/81008815/111882288-ddae5e00-89da-11eb-8c7b-2e2e3afd3c82.PNG">
-
-### <br/> ADD ON’s/ SUGGESTIONS BY JUDGES (ROUND 3):  IMPLEMENTED
--Increase Security 
- -Password protected login page
- -Authentication using Aadhar Card/Pan Card
--Making the algorithm for the risk factor sensitive user specific attributes, namely- AGE,Gender and pre health conditions
-
 
 - **Online ID verification (Aadhar/Pan Card)**
 <br/>
 <img align="center" width="800" height="400" src="https://user-images.githubusercontent.com/81008815/111882293-e737c600-89da-11eb-9682-c01f51888959.PNG">
 
 <img align="center" width="800" height="400" src="https://user-images.githubusercontent.com/80914496/111883509-e5bdcc00-89e1-11eb-897e-3dbb0b57feb2.png">
+
+### <br/> ADD ON’s/ SUGGESTIONS BY JUDGES (ROUND 3):  IMPLEMENTED
+<br/>-Increase Security 
+<br/> -Password protected login page
+<br/> -Authentication using Aadhar Card/Pan Card
+<br/>-Making the algorithm for the risk factor sensitive user specific attributes, namely- AGE,Gender and pre health conditions
+
 
 
 <br/> **1)	PROBLEM STATEMENT:** 
