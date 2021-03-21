@@ -26,11 +26,29 @@ def view_app(name, res, comm_ind):
     st.sidebar.write("Your name: ", name)
     
     df = pd.read_excel('patient.xlsx')
+    df_score = pd.read_excel("score.xlsx")
+    
+    
     index = list(np.where(df['name'] == name)[0])
     age_pre = df.loc[index, 'age']
     age_pre = age_pre.tolist()
     age = int(round(st.number_input('Enter your age: ', age_pre[0])))
     st.sidebar.write("Your age: ", age)
+    gender = df_score.loc[index, 'Gender']
+    gender = gender.tolist()
+    if gender[0] == "M":
+        placeholder_gender = st.sidebar.write("Gender: Male")
+    elif gender[0] == "F":
+        placeholder_gender = st.sidebar.write("Gender: Female")
+        
+    if age_pre[0] < 20:
+        st.sidebar.write("Age Group: <20")
+    if age_pre[0] >= 20 and age_pre[0] < 40:
+        st.sidebar.write("Age Group: 20 to 40")
+    if age_pre[0] >= 40 and age_pre[0] < 60:
+        st.sidebar.write("Age Group: 40 to 60")
+    if age_pre[0] >= 60:
+        st.sidebar.write("Age Group: >60")
     df.at[index, 'age'] = age
     df2 = df.iloc[comm_ind, 4:]
     #st.write(df2)
@@ -147,6 +165,7 @@ def view_app(name, res, comm_ind):
                     
                 df_score = pd.read_excel("score.xlsx")
                 
+                    
                 
                 age=list(df_score["age"])[1:]
                 pre=list(df_score["Precondition"])[1:]
@@ -161,7 +180,6 @@ def view_app(name, res, comm_ind):
                         dict_age[">60"] = dict_age.get(">60", 0) + 1
                     elif(x<60 and x>=40):
                         dict_age["40-60"] = dict_age.get("40-60", 0) + 1
-                    else:
                         dict_age["<20"] = dict_age.get("<20", 0) + 1
                 dict_pre={}
                 for x in pre:
@@ -192,6 +210,7 @@ def view_app(name, res, comm_ind):
                     else:
                         y="<20"
                     sum[x]=sum[x]+(dict_gender[gender[x]]/10) + (dict_age[y]/10) + (dict_pre[pre[x]]/10)
+                    #sum[x] -= sum[x]*(x/14)
                 maximum=max(sum)
                 minimum=min(sum)
                 add=[]
@@ -209,9 +228,9 @@ def view_app(name, res, comm_ind):
                     
                     
                     
-                df_score.to_excel("score.xlsx", index=False)
+                #df_score.to_excel("score.xlsx", index=False)
             
-                df_score = pd.read_excel("score.xlsx")
+                #df_score = pd.read_excel("score.xlsx")
                 ave = df_score.mean(axis = 0)[1:14]
                 deviation = df_score.std(axis = 0)[1:14]
 
@@ -307,8 +326,8 @@ def view_app(name, res, comm_ind):
         plt.figure(figsize =(9, 9)) 
         plt.scatter(df_latlong['P1'], df_latlong['P2'], c = cvec) 
         plt.legend((r, g, b, c, y, m, k), 
-                ('Label 0', 'Label 1', 'Label 2', 'Label 3' ,'Label 4', 
-                    'Label 5', 'Label -1'), 
+                ('Group 0', 'Group 1', 'Group 2', 'Group 3' ,'Group 4', 
+                    'Group 5', 'Group 6'), 
                 scatterpoints = 1, 
                 loc ='upper left', 
                 ncol = 3, 
@@ -384,8 +403,8 @@ def view_app(name, res, comm_ind):
         plt.figure(figsize =(9, 9)) 
         plt.scatter(df_latlong['P1'], df_latlong['P2'], c = cvec) 
         plt.legend((r, g, b, c, y, m, k), 
-                ('Label 0', 'Label 1', 'Label 2', 'Label 3' ,'Label 4', 
-                    'Label 5', 'Label -1'), 
+                ('Group 0', 'Group 1', 'Group 2', 'Group 3' ,'Group 4', 
+                    'Group 5', 'Group 6'), 
                 scatterpoints = 1, 
                 loc ='upper left', 
                 ncol = 3, 
