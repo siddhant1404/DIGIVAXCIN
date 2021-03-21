@@ -22,17 +22,21 @@ def view_app(name, res, comm_ind):
     placeholder_df = st.empty()
     
     
-    age = int(round(st.number_input('Enter your age: ')))
-    st.sidebar.write("Your name: ", name)
-    st.sidebar.write("Your age: ", age)
-    df = pd.read_excel('patient.xlsx')
-    st.header("Select today's symptoms and click submit: ")
-    index = list(np.where(df['name'] == name)[0])
     
+    st.sidebar.write("Your name: ", name)
+    
+    df = pd.read_excel('patient.xlsx')
+    index = list(np.where(df['name'] == name)[0])
+    age_pre = df.loc[index, 'age']
+    age_pre = age_pre.tolist()
+    age = int(round(st.number_input('Enter your age: ', age_pre[0])))
+    st.sidebar.write("Your age: ", age)
     df.at[index, 'age'] = age
     df2 = df.iloc[comm_ind, 4:]
     #st.write(df2)
     #placeholder_df.dataframe(df2)
+    
+    st.header("Select today's symptoms and click submit: ")
     days = ["Select a day","Day 1", "Day 2", "Day 3", "Day 4", "Day 5", "Day 6", "Day 7", "Day 8", "Day 9", "Day 10", "Day 11", "Day 12", 
     "Day 13", "Day 14"]
     option = st.sidebar.selectbox('Which day of your quarantine do you want to access',
@@ -137,9 +141,74 @@ def view_app(name, res, comm_ind):
                             if (y==key):
                                 score=score+value
                     SCORE.append(score)
+                    
+                    
+                    
+                    
                 df_score = pd.read_excel("score.xlsx")
-                for i in range(3,17):
-                    df_score.at[index, df_score.columns[i]] = SCORE[i-3]
+                
+                
+                age=list(df_score["age"])[1:]
+                pre=list(df_score["Precondition"])[1:]
+                gender=list(df_score["Gender"])[1:]
+                df_score["sum"]=df_score.loc[:,["Day 1","Day 2","Day 3","Day 4","Day 5","Day 6","Day 7","Day 8","Day 9","Day 10","Day 11","Day 12","Day 13","Day 14"]].sum(axis=1)
+                sum=list(df_score["sum"])[1:]
+                dict_age={}
+                for x in age:
+                    if(x>20 and x<40):
+                        dict_age["20-40"]=dict_age.get("20-40",0)+1
+                    elif(x>=60 ):
+                        dict_age[">60"] = dict_age.get(">60", 0) + 1
+                    elif(x<60 and x>=40):
+                        dict_age["40-60"] = dict_age.get("40-60", 0) + 1
+                    else:
+                        dict_age["<20"] = dict_age.get("<20", 0) + 1
+                dict_pre={}
+                for x in pre:
+                    if(x=="A"):
+                        dict_pre[x]=dict_pre.get(x,0)+1
+                    elif(x=="B"):
+                        dict_pre[x]=dict_pre.get(x,0)+1
+                    elif(x=="C"):
+                        dict_pre[x]=dict_pre.get(x,0)+1
+                dict_gender={}
+                for x in gender:
+                    if(x=="M"):
+                        dict_gender[x]=dict_gender.get(x,0)+1
+                    if(x=="F"):
+                        dict_gender[x]=dict_gender.get(x,0)+1
+                dict_age_s={}
+                y=0
+                scores=[]
+                dict_gender[gender[1]]
+                y=""
+                for x in range(len(sum)):
+                    if(age[x]>20 and age[x]<40):
+                        y="20-40"
+                    elif(age[x]>=60 ):
+                        y=">60"
+                    elif(age[x]<60 and age[x]>=40):
+                        y="40-60"
+                    else:
+                        y="<20"
+                    sum[x]=sum[x]+(dict_gender[gender[x]]/10) + (dict_age[y]/10) + (dict_pre[pre[x]]/10)
+                maximum=max(sum)
+                minimum=min(sum)
+                add=[]
+                for x in range(len(sum)):
+                    add.append(((sum[x]-minimum)/(maximum-minimum)))
+                
+                for x in range(1,len(sum)+1):
+                    df_score.loc[x,["Day 1","Day 2","Day 3","Day 4","Day 5","Day 6","Day 7","Day 8","Day 9","Day 10","Day 11","Day 12","Day 13","Day 14"]]=df_score.loc[x,["Day 1","Day 2","Day 3","Day 4","Day 5","Day 6","Day 7","Day 8","Day 9","Day 10","Day 11","Day 12","Day 13","Day 14"]]+add[x-1]
+                                
+                                
+                                
+                #for i in range(3,17):
+                    #df_score.at[index, df_score.columns[i]] = SCORE[i-3]
+                    
+                    
+                    
+                    
                 df_score.to_excel("score.xlsx", index=False)
             
                 df_score = pd.read_excel("score.xlsx")
@@ -149,7 +218,7 @@ def view_app(name, res, comm_ind):
                 high = ave + deviation
                 days = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", 
                     "13"]
-                scores = df_score.iloc[index[0], 3:16]
+                scores = df_score.iloc[index[0], 5:18]
                 import matplotlib.pyplot as plt
                 plt.bar(days, ave, color = ['green'])
                 plt.bar(days, high, color = ['red'], alpha = 0.3)
@@ -322,3 +391,5 @@ def view_app(name, res, comm_ind):
                 ncol = 3, 
                 fontsize = 8) 
         st.pyplot(plt)
+    if st.sidebar.button("Reset Map"):
+        placeholder_map = st.empty()

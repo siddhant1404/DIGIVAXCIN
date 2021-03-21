@@ -12,15 +12,18 @@ def view_app(name, res, comm_ind):
     placeholder_map = st.empty()
     placeholder_df = st.empty()
     
-    age = int(round(st.number_input('Enter your age: ')))
     st.sidebar.write("Your name: ", name)
-    st.sidebar.write("Your age: ", age)
+    
     df = pd.read_excel('vacsymp.xlsx')
-    st.header("Select today's symptoms and click submit: ")
     index = list(np.where(df['name'] == name)[0])
+    age_pre = df.loc[index, 'age']
+    age_pre = age_pre.tolist()
+    age = int(round(st.number_input('Enter your age: ', age_pre[0])))
+    
+    st.header("Select today's symptoms and click submit: ")
     df.at[index, 'age'] = age
     
-    
+    st.sidebar.write("Your age: ", age)
     placeholder_df.dataframe(df.iloc[comm_ind])
     days = ["Select a day","Day 1", "Day 2", "Day 3", "Day 4", "Day 5"]
     
@@ -157,7 +160,51 @@ def view_app(name, res, comm_ind):
                 st.write("High risk factor: Average + Standard Deviation")
     
     placeholder_df.write(df.iloc[comm_ind, 3:])
+        #Health condition listing for patients
+    issues = st.subheader("Enter your health conditions: ")
+    col11, col22 = st.beta_columns(2)
+    with col11:
+        issue1 = st.checkbox("Heart failure with hospital admission in past one year")
+        issue2 = st.checkbox("Post Cardiac Transplant/Left Ventricular Assist Device (LVAD)")
+        issue3 = st.checkbox("Significant left ventricular systolic dysfunction (LVEF<40%)")
+        issue4 = st.checkbox("Moderate or severe valvular heart disease")
+        issue5 = st.checkbox("Congenital heart disease with severe PAH or Idiopathic PAH")
+    with col22:
+        issue6 = st.checkbox("Coronary Artery Disease with past CABG/PTCA/MI AND Hypertension/Diabetes on treatment")
+        issue7 = st.checkbox("Angina AND Hypertension/Diabetes on treatment")
+        issue8 = st.checkbox("CT/MRI documented stroke AND Hypertension/Diabetes on treatment")
+        issue9 = st.checkbox("Pulmonary artery hypertension AND Hypertension/Diabetes on treatment")
+        issue10 = st.checkbox("Diabetes (>10 years OR with complications) AND Hypertension on treatment")
     
+    iss_list = []
+    df_issues = pd.read_excel("hissues.xlsx")
+    if issue1 == True:
+        iss_list.append("Heart failure with hospital admission in past one year")
+    if issue2 == True:
+        iss_list.append("Post Cardiac Transplant/Left Ventricular Assist Device (LVAD)")
+    if issue3 == True:
+        iss_list.append("Significant left ventricular systolic dysfunction (LVEF<40%)")
+    if issue4 == True:
+        iss_list.append("Moderate or severe valvular heart disease")
+    if issue5 == True:
+        iss_list.append("Congenital heart disease with severe PAH or Idiopathic PAH")
+    if issue6 == True:
+        iss_list.append("Coronary Artery Disease with past CABG/PTCA/MI AND Hypertension/Diabetes on treatment")
+    if issue7 == True:
+        iss_list.append("Angina AND Hypertension/Diabetes on treatment")
+    if issue8 == True:
+        iss_list.append("CT/MRI documented stroke AND Hypertension/Diabetes on treatment")
+    if issue9 == True:
+        iss_list.append("Pulmonary artery hypertension AND Hypertension/Diabetes on treatment")
+    if issue10 == True:
+        iss_list.append("Diabetes (>10 years OR with complications) AND Hypertension on treatment")
+    st.subheader("Your selected health issues: ")
+    for i in iss_list:
+        st.write(i)
+        
+        
+        
+        
     #Certificate Image Processing
     vac_img = st.file_uploader("Please upload a screenshot of your vaccine certificate")
     if vac_img is not None:
@@ -292,48 +339,9 @@ def view_app(name, res, comm_ind):
         for x in text:
             if (isValid(x)) and x == cert_pan:
                 st.success(("PAN Number Verified: ", cert_pan))
-    
-    issues = st.subheader("Enter your health conditions: ")
-    col11, col22 = st.beta_columns(2)
-    with col11:
-        issue1 = st.checkbox("Heart failure with hospital admission in past one year")
-        issue2 = st.checkbox("Post Cardiac Transplant/Left Ventricular Assist Device (LVAD)")
-        issue3 = st.checkbox("Significant left ventricular systolic dysfunction (LVEF<40%)")
-        issue4 = st.checkbox("Moderate or severe valvular heart disease")
-        issue5 = st.checkbox("Congenital heart disease with severe PAH or Idiopathic PAH")
-    with col22:
-        issue6 = st.checkbox("Coronary Artery Disease with past CABG/PTCA/MI AND Hypertension/Diabetes on treatment")
-        issue7 = st.checkbox("Angina AND Hypertension/Diabetes on treatment")
-        issue8 = st.checkbox("CT/MRI documented stroke AND Hypertension/Diabetes on treatment")
-        issue9 = st.checkbox("Pulmonary artery hypertension AND Hypertension/Diabetes on treatment")
-        issue10 = st.checkbox("Diabetes (>10 years OR with complications) AND Hypertension on treatment")
-    
-    iss_list = []
-    issues = []
-    df_issues = pd.read_excel("hissues.xlsx")
-    if issue1 == True:
-        iss_list.append("Heart failure with hospital admission in past one year")
-    if issue2 == True:
-        iss_list.append("Post Cardiac Transplant/Left Ventricular Assist Device (LVAD)")
-    if issue3 == True:
-        iss_list.append("Significant left ventricular systolic dysfunction (LVEF<40%)")
-    if issue4 == True:
-        iss_list.append("Moderate or severe valvular heart disease")
-    if issue5 == True:
-        iss_list.append("Congenital heart disease with severe PAH or Idiopathic PAH")
-    if issue6 == True:
-        iss_list.append("Coronary Artery Disease with past CABG/PTCA/MI AND Hypertension/Diabetes on treatment")
-    if issue7 == True:
-        iss_list.append("Angina AND Hypertension/Diabetes on treatment")
-    if issue8 == True:
-        iss_list.append("CT/MRI documented stroke AND Hypertension/Diabetes on treatment")
-    if issue9 == True:
-        iss_list.append("Pulmonary artery hypertension AND Hypertension/Diabetes on treatment")
-    if issue10 == True:
-        iss_list.append("Diabetes (>10 years OR with complications) AND Hypertension on treatment")
-    st.subheader("Your selected health issues: ")
-    for i in iss_list:
-        st.write(i)
+                
+                
+
         
         
     
