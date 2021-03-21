@@ -5,12 +5,18 @@
 
 ### <p align="center"> _Digivaxin:_ Digital Vaccination Foot Print & COVID Risk Analyser & Tracker </p>
 
-### <br/> ADD-ONs/SUGGESTIONS BY JUDGES:
+### <br/> ADD-ONs/SUGGESTIONS BY JUDGES (ROUND 2):  IMPLEMENTED
 Following up on the suggestions of our respected judges, we have incorporated the following aspects-
 
 - **Add feature to collect health issues of candidate, so that it will be useful for vaccination**
 <br/>
 <img align="center" width="400" height="300" src="https://user-images.githubusercontent.com/81008815/111882288-ddae5e00-89da-11eb-8c7b-2e2e3afd3c82.PNG">
+
+### <br/> ADD ON’s/ SUGGESTIONS BY JUDGES (ROUND 3):  IMPLEMENTED
+-Increase Security 
+ -Password protected login page
+ -Authentication using Aadhar Card/Pan Card
+-Making the algorithm for the risk factor sensitive user specific attributes, namely- AGE,Gender and pre health conditions
 
 
 - **Online ID verification (Aadhar/Pan Card)**
