@@ -16,7 +16,6 @@ Following up on the suggestions of our respected judges, we have incorporated th
 <br/>
 <img align="center" width="800" height="400" src="https://user-images.githubusercontent.com/81008815/111882293-e737c600-89da-11eb-9682-c01f51888959.PNG">
 
-<img align="center" width="800" height="400" src="https://user-images.githubusercontent.com/80914496/111883509-e5bdcc00-89e1-11eb-897e-3dbb0b57feb2.png">
 
 ### <br/> ADD ON’s/ SUGGESTIONS BY JUDGES (ROUND 3):  IMPLEMENTED
 <br/>-Increase Security 
